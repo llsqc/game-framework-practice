@@ -11,13 +11,13 @@ using UnityEngine;
 /// <typeparam name="T"></typeparam>
 public class SingletonAutoMono<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T instance;
+    private static T _instance;
 
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
                 //动态创建 动态挂载
                 //在场景上创建空物体
@@ -26,11 +26,11 @@ public class SingletonAutoMono<T> : MonoBehaviour where T : MonoBehaviour
                 //单例模式脚本对象依附的GameObject
                 obj.name = typeof(T).ToString();
                 //动态挂载对应的 单例模式脚本
-                instance = obj.AddComponent<T>();
+                _instance = obj.AddComponent<T>();
                 //过场景时不移除对象 保证它在整个游戏生命周期中都存在
                 DontDestroyOnLoad(obj);
             }
-            return instance;
+            return _instance;
         }
     }
 }
